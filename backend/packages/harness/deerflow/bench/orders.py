@@ -313,11 +313,10 @@ def _fulfil() -> StateGraph:
         lambda s: ({}, steps.slow_reconcile(ORDERS))))
     g.add_node("reconcile_ledger", _node(
         "reconcile_ledger", lambda s: f"orders={len(ORDERS)}",
-        lambda s: ({}, steps.reconcile_ledger(ORDERS)), kind="CHAIN"))
+        lambda s: ({}, steps.reconcile_ledger(ORDERS))))
     g.add_node("answer", _answer(
         lambda s: (
-            "Fulfilment review for the current book. "
-            + " ".join((s.get("notes") or ["nothing to report"]))
+            " ".join((s.get("notes") or ["nothing to report"]))
         )[:600],
         drop_usage="F4", quality=("Q5",)))
     g.add_edge(START, "stock_lookup")
